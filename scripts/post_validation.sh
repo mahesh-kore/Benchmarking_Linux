@@ -1,10 +1,10 @@
 #!/bin/bash
 printf "\n"
-echo -e "\e[1;34m-------- Service Checks --------\e[0m"
+echo -e "\e[1;34m----------------- Service Checks -----------------\e[0m"
 printf "\n"
 
-ports=( "22" "15672" "27017" "25" "6379" "9200" "80" "8888" )
-service=( "SSH" "RabbitMQ" "MongoDB" "HARAKA" "REDIS" "ElastciSearch" "Nginx" "Icinga" )
+ports=( "22" "15672" "27017" "9999" "25" "6379" "9200" "80" "8888" )
+service=( "SSH" "RabbitMQ" "MongoDB" "Test Service" "HARAKA" "REDIS" "ElastciSearch" "Nginx" "Icinga" )
 portlen=${#ports[@]}
 servicelen=${#service[@]}
 
@@ -21,7 +21,7 @@ printf "\n"
 done
 
 printf "\n"
-echo -e "\e[1;34m-------- SSL Cert Checks --------\e[0m"
+echo -e "\e[1;34m----------------- SSL Cert Checks -----------------\e[0m"
 printf "\n"
 SSL_CERT=/root/fullcert.pem
 KORE_CONFIG=/var/www/KoreServer/config/KoreConfig.json
@@ -43,7 +43,7 @@ else
 fi
 printf "\n"
 
-echo -e "\e[1;34m-------- Koreconfig Configuration Checks --------\e[0m"
+echo -e "\e[1;34m----------------- Koreconfig Configuration Checks -----------------\e[0m"
 printf "\n"
 KORE_CONFIG=/var/www/KoreServer/config/KoreConfig.json
 ENCRYTION_VAL=`grep -v "^\/\/" $KORE_CONFIG | jq '.crypto.enable'`
