@@ -12,13 +12,22 @@ for ((i=0,j=0;i<${portlen},j<${servicelen};i++,j++))
 do
 if lsof -i:${ports[$i]} > /dev/null
 then
-    echo -e "\e[1;32m${service[$j]} Service is UP and Running\e[0m"
+    echo -e "\e[1;32m${service[$j]} is up and Listening on port ${ports[$i]}\e[0m"
 else
-    echo -e "\e[1;31m${service[$j]} Service is NOT Running\e[0m"
+    echo -e "\e[1;31m${service[$j]} is down or not listening on port ${ports[$i]}\e[0m"
 
 fi
 printf "\n"
 done
+
+echo -e "\e[1;34m----------------- Internet Connectivity Check -----------------\e[0m"
+printf "\n"
+if nc -zw2 google.com 80 > /dev/null
+then
+  echo -e "\e[1;32mHTTP connectivity is up\e[0m"
+else
+  echo -e "\e[1;31mThe network is down or very slow\e[0m"
+fi
 
 printf "\n"
 echo -e "\e[1;34m----------------- SSL Cert Checks -----------------\e[0m"
