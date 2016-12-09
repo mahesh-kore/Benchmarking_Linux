@@ -8,7 +8,7 @@
 # Note: A total of 1GB of data will be downloaded during execution
 # Written by: Etienne Rached
 
-echo "========== CPU Info =========="
+echo -e "\e[1;34m========== CPU Info ==========\e[0m"
 cpuname=$( awk -F: '/model name/ {modelName=$2} END {print modelName}' /proc/cpuinfo )
 cpucores=$( awk -F: '/cpu cores/ {cCores=$2} END {print cCores}' /proc/cpuinfo )
 cpucache=$( awk -F: '/cache size/ {cache=$2} END {print cache}' /proc/cpuinfo )
@@ -17,24 +17,24 @@ echo "CPU model : $cpuname"
 echo "Number of cores : $cpucores"
 echo "CPU cache size : $cpucache"
 echo "CPU frequency : $cpufreq MHz"
-echo "======= END of CPU Info ======="
+echo -e "\e[1;34m======= END of CPU Info =======\e[0m"
 
 printf "\n"
-echo "========== Memory Info =========="
+echo -e "\e[1;34m========== Memory Info ==========\e[0m"
 memorysize=$(free -m | awk 'NR==2'|awk '{ print $2 }')
 swapsize=$(free -m | awk 'NR==4'| awk '{ print $2 }')
 echo "Total RAM : $memorysize MB"
 echo "Total swap : $swapsize MB"
-echo "======= END of Memory Info ======="
+echo -e "\e[1;34m======= END of Memory Info =======\e[0m"
 
 printf "\n"
-echo "========== System Info =========="
+echo -e "\e[1;34m========== System Info ==========\e[0m"
 uptime=$(uptime|awk '{ $1=$2=$(NF-6)=$(NF-5)=$(NF-4)=$(NF-3)=$(NF-2)=$(NF-1)=$NF=""; print }')
 echo "System uptime : $uptime"
-echo "======= END of System Info ======="
+echo -e "\e[1;34m======= END of System Info =======\e[0m"
 
 printf "\n"
-echo "========== Hard Disk Info =========="
+echo -e "\e[1;34m========== Hard Disk Info ==========\e[0m"
 echo "Now Testing I/O Speed. This might take a while..."
 # Measuring disk speed with DD
         io=$( ( dd if=/dev/zero of=test_$$ bs=64k count=16k conv=fdatasync && rm -f test_$$ ) 2>&1 | awk -F, '{io=$NF} END { print io}' | sed 's/^[ \t]*//;s/[ \t]*$//' )
@@ -54,10 +54,10 @@ echo "Now Testing I/O Speed. This might take a while..."
 hdds=$(df -h | awk '{if ($1 != "Filesystem") print $1 "\t" $2}')
 echo "Hard Disk Space:"
 echo "$hdds"
-echo "======= END of Hard Disk Info ======="
+echo -e "\e[1;34m======= END of Hard Disk Info =======\e[0m"
 
 printf "\n"
-echo "========== Network/Download Speed Info =========="
+echo -e "\e[1;34m========== Network/Download Speed Info ==========\e[0m"
 ethspeed=$(ethtool eth0 | grep -i speed)
 echo "Ethernet speed : $ethspeed"
 
