@@ -10,7 +10,7 @@
 
 echo -e "\e[1;34m========== CPU Info ==========\e[0m"
 cpuname=$( awk -F: '/model name/ {modelName=$2} END {print modelName}' /proc/cpuinfo )
-cpucores=$( awk -F: '/cpu cores/ {cCores=$2} END {print cCores}' /proc/cpuinfo )
+cpucores=`grep -c ^processor /proc/cpuinfo`
 cpucache=$( awk -F: '/cache size/ {cache=$2} END {print cache}' /proc/cpuinfo )
 cpufreq=$( awk -F: '/cpu MHz/ {frequency=$2} END {print frequency}' /proc/cpuinfo )
 echo "CPU model : $cpuname"
