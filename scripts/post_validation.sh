@@ -34,9 +34,9 @@ echo -e "\e[1;34m----------------- SSL Cert Checks -----------------\e[0m"
 printf "\n"
 SSL_CERT=/root/fullcert.pem
 KORE_CONFIG=/var/www/KoreServer/config/KoreConfig.json
-ExpDate=`openssl x509 -enddate -noout -in $SSL_CERT | cut -d"=" -f 2`
-CERT_CNAME=`openssl x509 -subject -noout -in $SSL_CERT | cut -d"=" -f 3 | sed -e 's/^[[:space:]]*//'`
+CERT_CNAME=`echo |openssl s_client -connect $CNAME_DEF:443 2>/dev/null | openssl x509 -noout -subject | cut -d"=" -f 3 | sed -e 's/^[[:space:]]*//'`
 CNAME_DEF=`grep hostname $KORE_CONFIG | cut -d":" -f 2 | cut -d"," -f 1 | tr -d '"' |sed -e 's/^[[:space:]]*//'`
+ExpDate=`echo | openssl s_client -connect $CNAME_DEF:443 2>/dev/null | openssl x509 -noout -enddate | cut -d"=" -f 2`
 if openssl x509 -checkend 2592000 -noout -in $SSL_CERT
 then
   echo -e "Certificate is good for another month! & Valid till \e[1;32m$ExpDate\e[0m"
