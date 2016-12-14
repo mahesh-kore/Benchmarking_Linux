@@ -32,7 +32,18 @@ fi
 printf "\n"
 echo -e "\e[1;34m----------------- SSL Cert Checks -----------------\e[0m"
 printf "\n"
-openssl s_client -showcerts -connect onprem.korebot.com:443 </dev/null 2>/dev/null|openssl x509 -outform PEM >/tmp/test.cert
+
+KORE_CONFIG=/var/www/KoreServer/config/KoreConfig.json
+CNAME_DEF=`grep hostname $KORE_CONFIG | cut -d":" -f 2 | cut -d"," -f 1 | tr -d '"' |sed -e 's/^[[:space:]]*//'`
+
+if nc -zw10 $CNAME_DEF 443 > /dev/null
+then
+  openssl s_client -showcerts -connect $CNAME_DEF:443 </dev/null 2>/dev/null|openssl x509 -outform PEM >/tmp/test.cert
+  echo -e "Downloaded certificate from (\e[1;32m$CNAME_DEF\e[0m) to perform checks"
+else
+  echo -e "\e[1;31mCertificate download failed or Nginx is down[0m"
+fi
+printf "\n"
 SSL_CERT=/tmp/test.cert
 KORE_CONFIG=/var/www/KoreServer/config/KoreConfig.json
 ExpDate=`openssl x509 -enddate -noout -in $SSL_CERT | cut -d"=" -f 2`
