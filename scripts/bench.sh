@@ -6,7 +6,7 @@
 # 4- Hard Disk Benchmark
 # 5- Download Speed Benchmark
 # Note: A total of 1GB of data will be downloaded during execution
-# Written by: Etienne Rached
+
 
 echo -e "\e[1;34m========== CPU Info ==========\e[0m"
 cpuname=$( awk -F: '/model name/ {modelName=$2} END {print modelName}' /proc/cpuinfo )
